@@ -18,7 +18,7 @@ var jpform = new JPForm({
   
   json: true // send data as json
   
-}); // initialize;
+}); 
 
 var firstname = jpform.getElem("#first"); //get element by id
 
