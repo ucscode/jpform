@@ -3,8 +3,11 @@ JPFORM is a vanilla script light weight form handler that manages and transfer d
 ### formpage.html
 ```
 <form id="jp-form" method="post" action="php-page.php">
+
   <input class="form-control" name="firstname" id="first" />
+  
   <textarea class="form-control" row="3" col="4" name="message"></textarea>
+  
 </form>
 ```
 ### script.js
