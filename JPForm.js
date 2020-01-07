@@ -236,16 +236,5 @@ function JPForm(OBJ) {
 	});
 }
  
-var jpform = new JPForm({
-	el:"#form",
-	action: "test.php",
-	json: false
-})
-
-
-jpform.getElem("!firstname");
-jpform.getValue('!message');
-//jpForm.getElem("!name").setRegx('word');
-
 
 
