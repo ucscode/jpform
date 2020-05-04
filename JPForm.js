@@ -37,20 +37,20 @@ function JPForm(OBJ) {
 	if(!OBJ.action) OBJ.action = __form__.action;
 	OBJ.json = OBJ.json === true ? true : false;
 	
-	var __success__, __fail__;
+	var __success__, __fail__, __init__;
 	
 	var validInputs = [];
 	
 	function convertExp(regx) {
 		switch(regx) {
 			case "word":
-				regx = /^\w+$/i;
+				regx = /^\s*\w+\s*$/i;
 				break;
 			case "text":
 				regx = /^[a-z0-9_\s\-.,]+$/i;
 				break;
 			case "number":
-				regx = /^\d+(?:\.\d+)?$/i;
+				regx = /^\s*\d+(?:\.\d+)?\s*$/i;
 				break;
 			case "email":
 				regx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -105,7 +105,7 @@ function JPForm(OBJ) {
 					};
 					var elx = elExist(this);
 					if(!elx) {
-						if(expression.exp == undefined) expression.exp = /[\s\S]+/i;
+						if(expression.exp == undefined) expression.exp = /[\s\S]*/i;
 						validInputs.push(expression);
 					} else {
 						var oldExpression = validInputs[elx.index];
@@ -155,6 +155,11 @@ function JPForm(OBJ) {
 		fail: {
 			value: function(func) {
 				__fail__ = func;
+			}
+		},
+		init: {
+			value: function(func) {
+				__init__ = func;
 			}
 		}
 	});
@@ -228,7 +233,11 @@ function JPForm(OBJ) {
 		event.preventDefault();
 		validInputs.organize();
 		var noErr = noErrors(validInputs);
-		if(!noErr || __self__.preventSend) return;
+		if(!noErr) return;
+		else {
+			if(typeof __init__ === 'function') __init__();
+			if(__self__.preventSend) return;
+		};
 		
 		var inputs = document.querySelectorAll("input[name], textarea[name], select[name]");
 		var data = convert(inputs);
