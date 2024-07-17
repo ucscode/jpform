@@ -100,9 +100,8 @@ class UcsForm
 		for (let name in this.validations) {
 			const inputElement = this.formElement.querySelector(`[name="${name}"]`);
 			if (inputElement) {
-				const value = inputElement.value.trim();
 				const callback = this.validations[name];
-				if (typeof callback == 'function' && !callback(value, inputElement)) {
+				if (typeof callback == 'function' && !callback(inputElement.value.trim(), inputElement)) {
 					this.#setValid(inputElement, false);
 					isValid = false;
 				} else {
@@ -131,7 +130,7 @@ class UcsForm
 			this.customSubmitCallback(formData, this.formElement);
 		}
 	}
-	
+
 	#initializeChangeEffects() {
 		const inputs = this.formElement.querySelectorAll('input, select, textarea');
 		inputs.forEach(input => input.addEventListener('focus', () => this.#setValid(input, true)));
